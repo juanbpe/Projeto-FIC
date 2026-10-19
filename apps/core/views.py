@@ -2,14 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.forms import SetPasswordForm
 from django.core.paginator import Paginator
-from django.db.models import Q, Min, Max, Avg, Sum
+from django.db.models import Q
 # Usuários
 from apps.usuarios.models import Usuario
 from apps.cursos.models import Area, PublicoAlvo, Curso
 from .forms import UsuarioFormCadastro
 from django.contrib.auth.decorators import login_required
 from datetime import date
-
+from django.db.models import Min, Max, Avg, Sum
 
 def transparencia(request):
     qtd_areas = Area.objects.count()
@@ -38,18 +38,15 @@ def transparencia(request):
         soma_ch += curso.ch
     
     media_ch = soma_ch / qtd_cursos
-    
 
     resumo = Curso.objects.aggregate(
         ch_menor = Min('ch'),
         ch_maior = Max('ch'),
-        ch_media = Avg('ch'),
+        ch_media =Avg('ch'),
         ch_total = Sum('ch')
     )
 
-    
-    cursos_ch = Curso.objects.all().order_by('-ch')
-
+    cursos_ch = Curso.objects.all().order_by('-ch')   
 
     context = {
         'qtd_areas': qtd_areas,

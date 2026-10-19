@@ -5,7 +5,12 @@ urlpatterns = [
     path('olamundo/', olamundo, name='olamundo'),
     path('instituicao/', instituicao, name='instituicao'),
     path('materias/', materias, name='materias'),
-    path('receber_1/', receber_1, name='receber_1'),
+    path('receber1/', receber1, name='receber1'),
     path('areas_lista/', areas_lista, name='areas_lista'),
-    path('publico_lista/', publico_lista, name='publico_lista'),
+    path('publicos_lista/', publicos_lista, name='publicos_lista'),
+
+    # Utilizando Serializers
+    path('areas/', areas, name='areas'),
+    path('area_cadastrar/', area_cadastrar, name='area_cadastrar'),
+    path('area_atualizar/<int:id>/', area_atualizar, name='area_atualizar'),
 ]

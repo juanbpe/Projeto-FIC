@@ -2,18 +2,53 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from apps.cursos.models import Area, PublicoAlvo, Curso
+from .serializers import AreaSerializer
+from rest_framework import status
+
+@api_view(['GET'])
+def areas(request):
+    todas_areas = Area.objects.all().order_by('nome')
+    serializer = AreaSerializer(todas_areas, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def area_cadastrar(request):
+    serializer = AreaSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['PUT'])
+def area_atualizar(request, id):
+    area = Area.objects.get(pk=id)
+    serializer = AreaSerializer(area, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(serializer.errors, 
+                    status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(["DELETE"])
+def area_deletar(request, id):
+    area = Area.objects.get(pk=id)
+    area.delete()
+    return Response(status=status.HTTP_200_OK)
+
 
 @api_view(['POST'])
 def olamundo(request):
     return Response({'mensagem': 'Olá Mundo!'})
+
 
 @api_view(['GET'])
 def instituicao(request):
     return Response({
         'nome': 'IFRN',
         'campus': 'Cang',
-        'cidade': 'Canguaretama',
-        'anos': 12
+        'Cidade': 'Canguaretama',
+        'Anos': 12
     })
 
 @api_view(['GET'])
@@ -25,7 +60,7 @@ def materias(request):
     ])
 
 @api_view(['POST'])
-def receber_1(request):
+def receber1(request):
     dados = request.data
     print(dados)
     print(dados['nome'])
@@ -42,10 +77,9 @@ def areas_lista(request):
     return Response(dados)
 
 @api_view(['GET'])
-def publico_lista(request):
+def publicos_lista(request):
     publicos = PublicoAlvo.objects.all().order_by()
     dados = []
     for publico in publicos:
         dados.append({'id': publico.id, 'nome': publico.nome})
-    
     return Response(dados)
