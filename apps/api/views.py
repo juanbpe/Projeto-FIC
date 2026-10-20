@@ -7,7 +7,7 @@ from apps.cursos.models import Area, PublicoAlvo, Curso
 from .serializers import AreaSerializer, UsuarioSerializer
 from django.contrib.auth import authenticate, login, logout
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def areas(request):
     todas_areas = Area.objects.all().order_by('nome')
     serializer = AreaSerializer(todas_areas, many=True)
