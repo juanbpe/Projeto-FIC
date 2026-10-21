@@ -36,7 +36,7 @@ def area_atualizar(request, id):
 def area_deletar(request, id):
     area = Area.objects.get(pk=id)
     area.delete()
-    return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['POST'])

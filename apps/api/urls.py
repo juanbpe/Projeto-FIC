@@ -13,6 +13,7 @@ urlpatterns = [
     path('areas/', areas, name='areas'),
     path('area_cadastrar/', area_cadastrar, name='area_cadastrar'),
     path('area_atualizar/<int:id>/', area_atualizar, name='area_atualizar'),
+    path('area_deletar/<int:id>/', area_deletar, name='area_deletar'),
 
     # aula 04
     path('login/', entrar, name='api_login'),
