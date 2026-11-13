@@ -10,4 +10,4 @@ python manage.py migrate
 
 # Criação de super usuário
 DJANGO_SUPERUSER_PASSWORD=1234@Ifrn
-python manage.py createsuperuser --username admin
+python manage.py createsuperuser --no-input --username-admin --cpf-12345
