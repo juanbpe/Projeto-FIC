@@ -5,7 +5,6 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from apps.cursos.models import Area, PublicoAlvo, Curso
 from .serializers import AreaSerializer, UsuarioSerializer
-from django.contrib.auth import authenticate, login, logout
 
 @api_view(['GET', 'POST'])
 def areas(request):
@@ -85,18 +84,3 @@ def publicos_lista(request):
     for publico in publicos:
         dados.append({'id': publico.id, 'nome': publico.nome})
     return Response(dados)
-
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def entrar(request):
-    usuario = authenticate(request, username=request.data.get('username'), password=request.data.get('password'))
-    if usuario is None:
-        return Response({'detail': 'Usuário ou senha inválidos.'}, status=status.HTTP_401_UNAUTHORIZED)
-    login(request, usuario)
-    serializer = UsuarioSerializer(usuario)
-    return Response(serializer.data)
-
-@api_view(['POST'])
-def sair(request):
-    logout(request)
-    return Response(status=status.HTTP_204_NO_CONTENT)

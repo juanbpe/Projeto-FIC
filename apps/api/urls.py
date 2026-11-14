@@ -1,4 +1,5 @@
 from django.urls import path
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenBlacklistView
 from .views import *
 
 urlpatterns = [
@@ -16,6 +17,11 @@ urlpatterns = [
     path('area_deletar/<int:id>/', area_deletar, name='area_deletar'),
 
     # aula 04
-    path('login/', entrar, name='api_login'),
-    path('logout/', sair, name='api_logout'),
+    # path('login/', entrar, name='api_login'),
+    # path('logout/', sair, name='api_logout'),
+
+     # aula 04
+    path('token/', TokenObtainPairView.as_view(), name='api_token'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='api_token_refresh'),
+    path('token/blacklist/', TokenBlacklistView.as_view(), name='api_token_blacklist'),
 ]
