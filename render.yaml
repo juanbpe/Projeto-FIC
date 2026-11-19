@@ -1,20 +1,20 @@
 databases:
-  - name: mysitedb
+  - name: fic_db
     plan: free
-    databaseName: mysite
-    user: mysite
+    databaseName: fic
+    user: fic_user
 
 services:
   - type: web
     plan: free
-    name: mysite
+    name: fic
     runtime: python
     buildCommand: './build.sh'
     startCommand: 'python -m gunicorn fic.asgi:application -k uvicorn.workers.UvicornWorker'
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: mysitedb
+          name: fic_db
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
